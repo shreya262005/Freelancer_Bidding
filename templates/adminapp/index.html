@@ -1,0 +1,82 @@
+{% extends "adminapp/master.html" %}
+{% load static %}
+{% block content %}
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Admin Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+                <div class="card-body">
+                  <h5 class="card-title">Total Freelancer</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ freelancer|default:"0" }}</h6>
+                      <span class="text-muted small pt-2">registered Freelancers</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h5 class="card-title">Total Clients</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ client|default:"0" }}</h6>
+                      <span class="text-muted small pt-2">registered Clients</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Users Card -->
+
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h5 class="card-title">Total Users</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ user|default:"0" }}</h6>
+                      <span class="text-muted small pt-2">registered users</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Users Card -->
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+{% endblock %}

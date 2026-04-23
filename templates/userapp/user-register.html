@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Freelancer Pro - User Registration</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'userapp/assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'userapp/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'userapp/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'userapp/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'userapp/assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'userapp/assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+  <link href="{% static 'userapp/assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+  <link href="{% static 'userapp/assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'userapp/assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'userapp/assets/css/style.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <main>
+    <div class="container">
+      <main>
+        <div class="container">
+    
+            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-7 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                            <h2 class="elementor-heading-title elementor-size-default">User Registration</h2>
+    
+                            <div class="card mb-3">
+                                <div class="card-body">
+    
+                                    <div class="pt-4 pb-2">
+                                        <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                                        <p class="text-center small">Enter your personal details to create an account</p>
+                                    </div>
+    
+                                    {% if messages %}
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        {% for message in messages %}
+                                        {{ message }}
+                                        {% endfor %}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    {% endif %}
+    
+                                    <form class="row g-3 needs-validation" enctype="multipart/form-data" novalidate method="post">
+                                        {% csrf_token %}
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Client name</label>
+                                            <div class="input-group has-validation">
+                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                                <input type="text" name="username" class="form-control" id="yourUsername" required placeholder="Enter your client name">
+                                                <div class="invalid-feedback">Please choose a username.</div>
+                                                <div id="username-feedback" class="valid-feedback">Username is available!</div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-12">
+                                            <label for="yourContact" class="form-label">Contact</label>
+                                            <input type="text" name="contact" class="form-control" id="yourContact" required pattern="[0-9]{10}" placeholder="Enter a valid 10-digit contact number">
+                                            <div class="invalid-feedback">Please enter a valid contact number (10 digits).</div>
+                                        </div>
+    
+                                        <div class="col-md-6">
+                                            <label for="yourGender" class="form-label">Gender</label>
+                                            <select name="gender" class="form-select" id="yourGender" required>
+                                                <option value="" selected disabled>Choose...</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select your gender.</div>
+                                        </div>
+    
+                                        <div class="col-md-6">
+                                            <label for="yourImage" class="form-label">Profile Image</label>
+                                            <input type="file" name="image" class="form-control" id="yourImage" required accept="image/*">
+                                            <div class="invalid-feedback">Please provide a profile image.</div>
+                                        </div>
+    
+                                        <div class="col-12">
+                                            <label for="companyName" class="form-label">Company Name</label>
+                                            <input type="text" name="company_name" class="form-control" id="companyName" required placeholder="Enter your company name">
+                                            <div class="invalid-feedback">Please enter your company name.</div>
+                                        </div>
+    
+                                        <div class="col-6">
+                                            <label for="ownerName" class="form-label">Owner Name</label>
+                                            <input type="text" name="owner_name" class="form-control" id="ownerName" required placeholder="Enter the owner's name">
+                                            <div class="invalid-feedback">Please enter the owner name.</div>
+                                        </div>
+    
+                                        <div class="col-6">
+                                            <label for="companyWebsite" class="form-label">Company Website</label>
+                                            <input type="url" name="company_website" class="form-control" id="companyWebsite" required placeholder="Enter the company website">
+                                            <div class="invalid-feedback">Please enter a valid website URL.</div>
+                                        </div>
+    
+                                        <div class="col-12">
+                                            <label for="companyPhone" class="form-label">Company Contact</label>
+                                            <input type="text" name="company_phone" class="form-control" id="companyPhone" required pattern="[0-9]{10}" placeholder="Enter a valid 10-digit company contact">
+                                            <div class="invalid-feedback">Please enter a valid company contact number (10 digits).</div>
+                                        </div>
+    
+                                        <div class="col-12">
+                                            <label for="projectDetails" class="form-label">Project Details</label>
+                                            <textarea name="project_details" class="form-control" id="projectDetails" required rows="3" placeholder="Enter your project details"></textarea>
+                                            <div class="invalid-feedback">Please enter your project details.</div>
+                                        </div>
+    
+                                        <div class="col-md-12">
+                                            <label for="location" class="form-label">Location</label>
+                                            <input type="text" name="location" class="form-control" id="location" required placeholder="Enter your location">
+                                            <div class="invalid-feedback">Please enter your location.</div>
+                                        </div>
+    
+                                        <div class="col-md-6">
+                                            <label for="yourPassword" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <input type="password" name="password" class="form-control" id="yourPassword" required minlength="6" placeholder="Enter your password">
+                                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                                    <i class="bi bi-eye" id="toggleIcon"></i>
+                                                </button>
+                                                <div class="invalid-feedback">Please enter a password (minimum 6 characters).</div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-md-6">
+                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                            <div class="input-group">
+                                                <input type="password" name="password1" class="form-control" id="confirmPassword" required minlength="6" placeholder="Confirm your password">
+                                                <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+                                                    <i class="bi bi-eye" id="toggleConfirmIcon"></i>
+                                                </button>
+                                                <div class="invalid-feedback">Please confirm your password.</div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="terms" type="checkbox" value="accepted" id="acceptTerms" required>
+                                                <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
+                                                <div class="invalid-feedback">You must agree before submitting.</div>
+                                            </div>
+                                        </div>
+    
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                                        </div>
+    
+                                        <div class="col-12">
+                                            <p class="small mb-0">Already have an account? <a href="{% url 'login_page' %}">Log in</a></p>
+                                        </div>
+    
+                                        <div class="col-12">
+                                            <p class="small mb-0">Freelancer? <a href="{% url 'freelancer_register' %}">Freelancer Register Here</a></p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+    
+            </section>
+        </div>
+    </main>
+    
+
+      <style>
+        /* Apply a single background color to the whole page */
+        body {
+          background-color: #e9f0f7; /* Light blue tone - clean and professional */
+          font-family: 'Poppins', sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+      
+        /* Make sure section takes full height and centers content */
+        .register {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      
+        /* Card/form container style */
+        .card {
+          background-color: #ffffff;
+          border-radius: 15px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+          padding: 30px;
+          width: 100%;
+        }
+      
+        /* Headings */
+        .elementor-heading-title {
+          color: #012970;
+          font-weight: 600;
+          margin-bottom: 20px;
+        }
+      
+        .card-title {
+          color: #4154f1;
+        }
+      
+        /* Labels */
+        label.form-label {
+          font-weight: 500;
+        }
+      
+        /* Buttons */
+        .btn-primary {
+          background-color: #4154f1;
+          border: none;
+        }
+      
+        .btn-primary:hover {
+          background-color: #293bb5;
+        }
+      </style>
+      
+
+    </div>
+  </main><!-- End #main -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'userapp/assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+  <script src="{% static 'userapp/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'userapp/assets/vendor/chart.js/chart.umd.js' %}"></script>
+  <script src="{% static 'userapp/assets/vendor/echarts/echarts.min.js' %}"></script>
+  <script src="{% static 'userapp/assets/vendor/quill/quill.js' %}"></script>
+  <script src="{% static 'userapp/assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+  <script src="{% static 'userapp/assets/vendor/tinymce/tinymce.min.js' %}"></script>
+  <script src="{% static 'userapp/assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'userapp/assets/js/main.js' %}"></script>
+
+  <!-- Form validation script -->
+  <script>
+    // Enable form validation
+    (function() {
+      'use strict';
+      
+      // Fetch all forms that need validation
+      const form = document.querySelector('.needs-validation');
+      
+      // Form field references
+      const username = document.getElementById('yourUsername');
+      const contact = document.getElementById('yourContact');
+      const gender = document.getElementById('yourGender');
+      const imageInput = document.getElementById('yourImage');
+      const password = document.getElementById('yourPassword');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const companyPhone = document.getElementById('companyPhone');
+      {% comment %} const rating = document.getElementById('rating'); {% endcomment %}
+      const terms = document.getElementById('acceptTerms');
+      
+      // Create validation feedback object
+      const validationMessages = {
+        username: 'Please choose a valid username (at least 3 characters)',
+        contact: 'Please enter a valid contact number (10 digits)',
+        gender: 'Please select your gender',
+        image: 'Please select a profile image',
+        companyPhone: 'Please enter a valid company contact number (10 digits)',
+        rating: 'Please enter a rating between 1 and 5',
+        password: 'Password must be at least 6 characters',
+        passwordMatch: 'Passwords do not match',
+        terms: 'You must agree to the terms and conditions'
+      };
+      
+      // Real-time username validation
+      username.addEventListener('input', function() {
+        if (this.value.trim().length < 3) {
+          this.setCustomValidity(validationMessages.username);
+          this.classList.add('is-invalid');
+          this.classList.remove('is-valid');
+          document.getElementById('username-feedback').textContent = 'Username must be at least 3 characters';
+        } else {
+          // Check username availability via AJAX
+          checkUsernameAvailability(this.value.trim());
+        }
+      });
+      
+      // Function to check username availability
+      function checkUsernameAvailability(username) {
+        fetch('{% url "validate_username" %}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username: username })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.valid) {
+            // Username is available
+            document.getElementById('yourUsername').setCustomValidity('');
+            document.getElementById('yourUsername').classList.remove('is-invalid');
+            document.getElementById('yourUsername').classList.add('is-valid');
+            document.getElementById('username-feedback').textContent = 'Username is available!';
+          } else {
+            // Username is taken
+            document.getElementById('yourUsername').setCustomValidity(data.message);
+            document.getElementById('yourUsername').classList.add('is-invalid');
+            document.getElementById('yourUsername').classList.remove('is-valid');
+            document.getElementById('username-feedback').textContent = data.message;
+          }
+        })
+        .catch(error => {
+          console.error('Error checking username:', error);
+        });
+      }
+      
+      // Real-time contact validation
+      contact.addEventListener('input', function() {
+        const isValid = /^[0-9]{10}$/.test(this.value.trim());
+        if (!isValid) {
+          this.setCustomValidity(validationMessages.contact);
+          this.classList.add('is-invalid');
+          this.classList.remove('is-valid');
+        } else {
+          this.setCustomValidity('');
+          this.classList.remove('is-invalid');
+          this.classList.add('is-valid');
+        }
+      });
+      
+      // Company phone validation
+      companyPhone.addEventListener('input', function() {
+        const isValid = /^[0-9]{10}$/.test(this.value.trim());
+        if (!isValid) {
+          this.setCustomValidity(validationMessages.companyPhone);
+          this.classList.add('is-invalid');
+          this.classList.remove('is-valid');
+        } else {
+          this.setCustomValidity('');
+          this.classList.remove('is-invalid');
+          this.classList.add('is-valid');
+        }
+      });
+      
+      // Gender validation
+      gender.addEventListener('change', function() {
+        if (this.value === '') {
+          this.setCustomValidity(validationMessages.gender);
+          this.classList.add('is-invalid');
+          this.classList.remove('is-valid');
+        } else {
+          this.setCustomValidity('');
+          this.classList.remove('is-invalid');
+          this.classList.add('is-valid');
+        }
+      });
+      
+      // Image validation
+      imageInput.addEventListener('change', function() {
+        if (this.files.length === 0) {
+          this.setCustomValidity(validationMessages.image);
+          this.classList.add('is-invalid');
+          this.classList.remove('is-valid');
+        } else {
+          // Check if file is an image
+          const file = this.files[0];
+          const fileType = file.type;
+          const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+          
+          if (!validImageTypes.includes(fileType)) {
+            this.setCustomValidity('Please select a valid image file (JPG, PNG, GIF)');
+            this.classList.add('is-invalid');
+            this.classList.remove('is-valid');
+          } else {
+            this.setCustomValidity('');
+            this.classList.remove('is-invalid');
+            this.classList.add('is-valid');
+          }
+        }
+      });
+      
+      // Rating validation
+      //rating.addEventListener('input', function() {
+       // const value = parseInt(this.value);
+       // if (isNaN(value) || value < 1 || value > 5) {
+        //  this.setCustomValidity(validationMessages.rating);
+          //this.classList.add('is-invalid');
+         // this.classList.remove('is-valid');
+       // } else {
+        //  this.setCustomValidity('');
+         // this.classList.remove('is-invalid');
+         // this.classList.add('is-valid');
+        //}
+      //});
+      
+      // Password validation
+      password.addEventListener('input', function() {
+        if (this.value.length < 6) {
+          this.setCustomValidity(validationMessages.password);
+          this.classList.add('is-invalid');
+          this.classList.remove('is-valid');
+        } else {
+          this.setCustomValidity('');
+          this.classList.remove('is-invalid');
+          this.classList.add('is-valid');
+          
+          // Check password match
+          if (confirmPassword.value !== '') {
+            if (confirmPassword.value !== this.value) {
+              confirmPassword.setCustomValidity(validationMessages.passwordMatch);
+              confirmPassword.classList.add('is-invalid');
+              confirmPassword.classList.remove('is-valid');
+            } else {
+              confirmPassword.setCustomValidity('');
+              confirmPassword.classList.remove('is-invalid');
+              confirmPassword.classList.add('is-valid');
+            }
+          }
+        }
+      });
+      
+      // Confirm password validation
+      confirmPassword.addEventListener('input', function() {
+        if (this.value !== password.value) {
+          this.setCustomValidity(validationMessages.passwordMatch);
+          this.classList.add('is-invalid');
+          this.classList.remove('is-valid');
+        } else {
+          this.setCustomValidity('');
+          this.classList.remove('is-invalid');
+          this.classList.add('is-valid');
+        }
+      });
+      
+      // Terms checkbox validation
+      terms.addEventListener('change', function() {
+        if (!this.checked) {
+          this.setCustomValidity(validationMessages.terms);
+        } else {
+          this.setCustomValidity('');
+        }
+      });
+      
+      // Loop over form inputs and prevent submission if invalid
+      form.addEventListener('submit', event => {
+        // Validate all fields
+        const inputs = form.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+          if (input.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        });
+        
+        // Password match validation
+        if (password.value !== confirmPassword.value) {
+          confirmPassword.setCustomValidity('Passwords do not match');
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        
+        form.classList.add('was-validated');
+        
+        // Focus on first invalid field
+        const invalidField = form.querySelector(':invalid');
+        if (invalidField) {
+          invalidField.focus();
+        }
+      }, false);
+      
+      // Add styling for valid/invalid fields dynamically
+      const allFields = form.querySelectorAll('input, select, textarea');
+      allFields.forEach(field => {
+        if (!field.classList.contains('form-check-input')) { // Skip checkboxes
+          field.addEventListener('blur', function() {
+            if (this.checkValidity()) {
+              this.classList.add('is-valid');
+              this.classList.remove('is-invalid');
+            } else {
+              this.classList.add('is-invalid');
+              this.classList.remove('is-valid');
+            }
+          });
+        }
+      });
+
+      // Toggle password visibility
+      document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('yourPassword');
+        const icon = document.getElementById('toggleIcon');
+        
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          icon.classList.remove('bi-eye');
+          icon.classList.add('bi-eye-slash');
+        } else {
+          passwordInput.type = 'password';
+          icon.classList.remove('bi-eye-slash');
+          icon.classList.add('bi-eye');
+        }
+      });
+
+      // Toggle confirm password visibility
+      document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('confirmPassword');
+        const icon = document.getElementById('toggleConfirmIcon');
+        
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          icon.classList.remove('bi-eye');
+          icon.classList.add('bi-eye-slash');
+        } else {
+          passwordInput.type = 'password';
+          icon.classList.remove('bi-eye-slash');
+          icon.classList.add('bi-eye');
+        }
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

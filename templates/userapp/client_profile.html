@@ -1,0 +1,88 @@
+{% extends "userapp/master.html" %}
+{% load static %}
+{% block content %}
+
+<div class="profile-container">
+    <h2>Client Profile</h2>
+    <div class="profile-image">
+        {% if client and client.user and client.user.image %}
+            <img src="{{ client.user.image.url }}" alt="Profile Image">
+        {% else %}
+            <img src="{% static 'default_profile.jpg' %}" alt="Default Image">
+        {% endif %}
+    </div>
+    
+    
+    <div class="profile-info">
+        <p><strong>Username:</strong> {{ client.user.username }}</p>
+        <p><strong>Company Name:</strong> {{ client.company_name }}</p>
+        <p><strong>Owner Name:</strong> {{ client.owner_name }}</p>
+        <p><strong>Company Phone:</strong> {{ client.company_phone }}</p>
+        <p><strong>Location:</strong> {{ client.location }}</p>
+    </div>
+
+    <a href="{% url 'update_client_profile' %}" class="btn-edit">Edit Profile</a>
+</div>
+
+<style>
+    body {
+        background-color:rgb(234, 241, 251); /* Light background color */
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 80px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px;
+        background-color: #ffffff; /* White background for profile container */
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-image img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .profile-info {
+        margin-top: 20px;
+        text-align: left;
+        width: 100%;
+    }
+
+    .profile-info p {
+        font-size: 18px;
+        margin: 10px 0;
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .btn-edit {
+        padding: 10px 20px;
+        margin-top: 20px;
+        background-color: #d3d3d3; /* Light gray background for the button */
+        color: black;
+        text-decoration: none;
+        border-radius: 5px;
+        display: inline-block;
+        font-size: 16px;
+        text-align: center;
+        border: 1px solid #bbb; /* Slight border for subtle effect */
+    }
+
+    .btn-edit:hover {
+        background-color: #b0b0b0; /* Slightly darker gray on hover */
+        color: white;
+    }
+</style>
+
+{% endblock %}

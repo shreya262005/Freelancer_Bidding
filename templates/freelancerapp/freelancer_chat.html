@@ -1,0 +1,216 @@
+{% extends "freelancerapp/master.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .chat-container {
+    display: flex;
+    height: 80vh;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 30%;
+    background-color: #ffffff;
+    border-right: 1px solid #e6e6e6;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .sidebar h5 {
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .sidebar a {
+    transition: background 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+
+  .sidebar a:hover {
+    background-color: #f1f1f1;
+  }
+
+  .initial-avatar {
+    background-color: #25d366;
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  /* Chat Section */
+  .chatbox {
+    width: 150%;
+    background: #ece5dd;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    position: relative;
+    margin-left:200px;
+  }
+
+  .chat-header {
+    background: #075e54;
+    padding: 12px 20px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+
+  .messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .messages::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .messages::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 5px;
+  }
+
+  .chat-bubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    position: relative;
+    word-wrap: break-word;
+  }
+
+  .text-start .chat-bubble {
+    background-color: #ffffff;
+    border-bottom-left-radius: 0;
+  }
+
+  .text-end .chat-bubble {
+    background-color: #dcf8c6;
+    border-bottom-right-radius: 0;
+  }
+
+  .chat-timestamp {
+    font-size: 11px;
+    color: #888;
+    margin-top: 3px;
+  }
+
+  /* Input */
+  form.d-flex {
+    margin-top: auto;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  form input[type="text"], textarea {
+    flex-grow: 1;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    resize: none;
+    font-size: 15px;
+    background: #f1f1f1;
+  }
+
+  form input:focus, textarea:focus {
+    outline: none;
+  }
+
+  .btn-primary {
+    background-color: #128c7e;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+  }
+
+  .btn-primary:hover {
+    background-color: #075e54;
+  }
+</style>
+
+<main id="main" class="main">
+  <div class="chat-container mt-4">
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+      <h5>Freelancers</h5>
+      <ul class="list-unstyled">
+        {% for freelancer in freelancers %}
+        <li class="mb-3 d-flex align-items-center">
+          <a href="{% url 'freelancer_chat_view' freelancer.id %}" class="d-flex align-items-center text-decoration-none text-dark">
+            {% if freelancer.image %}
+              <img src="{{ freelancer.image.url }}" class="rounded-circle" width="40" height="40" style="margin-right: 10px;">
+            {% else %}
+              <div class="initial-avatar">
+                {{ freelancer.username|first|upper }}
+              </div>
+            {% endif %}
+            <strong>{{ freelancer.username }}</strong>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- RIGHT CHATBOX -->
+    <div class="chatbox">
+      {% if selected_user %}
+      <div class="chat-header">
+        Chat with {{ selected_user.username }}
+      </div>
+
+      <div class="messages" id="chat-messages">
+        {% for chat in chats %}
+        <div class="{% if chat.sender == request.user %}text-end{% else %}text-start{% endif %}">
+          <div class="chat-bubble">
+            {{ chat.msg }}
+            <div class="chat-timestamp">
+              {{ chat.timestamp|time:"H:i" }}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <form method="POST" class="d-flex">
+        {% csrf_token %}
+        {{ form.msg }}
+        <button type="submit" class="btn btn-primary ms-2">Send</button>
+      </form>
+      {% else %}
+      <div class="alert alert-info">Select a user to start chatting.</div>
+      {% endif %}
+    </div>
+  </div>
+</main>
+
+<script>
+  const messageBox = document.getElementById('chat-messages');
+  if (messageBox) {
+    messageBox.scrollTop = messageBox.scrollHeight;
+  }
+</script>
+
+{% endblock %}

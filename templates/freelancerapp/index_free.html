@@ -1,0 +1,91 @@
+{% extends "freelancerapp/master.html" %}
+{% load static %}
+{% block content %}
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Freelancer Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'index_free' %}">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <!-- Projects Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+                <div class="card-body">
+                  <h5 class="card-title">List Projects <span>| Active</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-briefcase"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ project|default:"0" }}</h6>
+                      <span class="text-muted small pt-2"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Projects Card -->
+
+            <!-- Revenue Card -->
+            {% comment %} <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+                <div class="card-body">
+                  <h5 class="card-title">Earnings <span>| This Month</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-currency-dollar"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>${{ monthly_earnings|default:"0" }}</h6>
+                      <span class="text-muted small pt-2">from {{ completed_projects|default:"0" }} completed projects</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Revenue Card --> {% endcomment %}
+
+            <!-- Proposals Card -->
+            {% comment %} <div class="col-xxl-4 col-xl-12">
+              <div class="card info-card customers-card">
+                <div class="card-body">
+                  <h5 class="card-title">My Proposals <span>| Pending</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ pending_proposals|default:"0" }}</h6>
+                      <span class="text-muted small pt-2">awaiting client response</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End Proposals Card --> {% endcomment %}
+
+          </div>
+        </div><!-- End Left side columns -->
+
+        </div><!-- End Right side columns -->
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+{% endblock %}

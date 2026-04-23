@@ -1,0 +1,98 @@
+{% extends "userapp/master.html" %}
+{% load static %}
+{% block content %}
+
+<main class="main">
+
+         <!-- Contact Section -->
+        <section id="contact" class="contact section">
+
+            <!-- Section Title -->
+            <div class="container section-title mt-5" data-aos="fade-up">
+              <p>Contact Us</p>
+            </div><!-- End Section Title -->
+      
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+      
+              <div class="row gy-4">
+      
+                <div class="col-lg-6">
+      
+                  <div class="row gy-4">
+                    <div class="col-md-6">
+                      <div class="info-item" data-aos="fade" data-aos-delay="200">
+                        <i class="bi bi-geo-alt"></i>
+                        <h3>Address</h3>
+                        <p>A108 Swam Sky</p>
+                        <p>Ahemdabad, 380060</p>
+                      </div>
+                    </div><!-- End Info Item -->
+      
+                    <div class="col-md-6">
+                      <div class="info-item" data-aos="fade" data-aos-delay="300">
+                        <i class="bi bi-telephone"></i>
+                        <h3>Call Us</h3>
+                        <p> 55894 55488 </p>
+                        <p> 66782 25444 </p>
+                      </div>
+                    </div><!-- End Info Item -->
+      
+                    <div class="col-md-6">
+                      <div class="info-item" data-aos="fade" data-aos-delay="400">
+                        <i class="bi bi-envelope"></i>
+                        <h3>Email Us</h3>
+                        <p>FlexBid@gmail.com</p>
+                        <p>info@gmail.com</p>
+                      </div>
+                    </div><!-- End Info Item -->
+      
+                    <div class="col-md-6">
+                      <div class="info-item" data-aos="fade" data-aos-delay="500">
+                        <i class="bi bi-clock"></i>
+                        <h3>Open Hours</h3>
+                        <p>Monday - Friday</p>
+                        <p>9:00AM - 05:00PM</p>
+                      </div>
+                    </div><!-- End Info Item -->
+      
+                  </div>
+      
+                </div>
+      
+                <div class="col-lg-6">
+                  <form method="post" data-aos="fade-up" data-aos-delay="200">
+                    {% csrf_token %}
+                    <div class="row gy-4">
+      
+                      <div class="col-md-6">
+                        <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                      </div>
+      
+                      <div class="col-md-6 ">
+                        <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                      </div>
+      
+                      <div class="col-12">
+                        <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                      </div>
+      
+                      <div class="col-12">
+                        <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                      </div>
+
+                      <div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                      </div>
+      
+                    </div>
+                  </form>
+                </div><!-- End Contact Form -->
+      
+              </div>
+      
+            </div>
+      
+          </section><!-- /Contact Section -->
+</main>
+
+        {% endblock %} 

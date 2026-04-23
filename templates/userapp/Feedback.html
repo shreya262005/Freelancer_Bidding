@@ -1,0 +1,136 @@
+{% extends "userapp/master.html" %}
+{% load static %}
+{% block content %}
+
+<main class="main">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .feedback-container {
+            max-width: 650px;
+            margin: 50px auto;
+            margin-top: 150px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        h3 {
+            font-weight: 600;
+            color: #343a40;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #333;
+        }
+        .form-control,
+        .form-select {
+            background-color: #f9f9f9;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 10px 14px;
+            transition: all 0.3s ease-in-out;
+        }
+        .form-control:focus,
+        .form-select:focus {
+            background-color: #fff;
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.1rem rgba(0,123,255,.25);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        {% comment %} .thank-you {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            margin-top:100px;
+            background-color: #e9f7ef;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+        }
+        .thank-you h4 {
+            font-size: 28px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .thank-you p {
+            color: #555;
+            font-size: 16px;
+        } {% endcomment %}
+    </style>
+
+    <div class="container">
+        <div class="feedback-container" id="form-container" >
+            <h3 class="mb-4">We Value Your Feedback</h3>
+            <form method="post" id="feedbackForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Your Name (Optional)</label>
+                    <input type="text" class="form-control" name="name" placeholder="John Doe">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Your Email (Optional)</label>
+                    <input type="email" class="form-control" name="email" placeholder="you@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="user_type" class="form-label">I am a...</label>
+                    <select class="form-select" name="user_type" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option value="client">Client</option>
+                        <option value="freelancer">Freelancer</option>
+                        <option value="visitor">Visitor</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Rate Your Experience</label>
+                    <select class="form-select" name="rating" required>
+                        <option selected disabled value="">Select Rating</option>
+                        <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                        <option value="4">⭐⭐⭐⭐ Very Good</option>
+                        <option value="3">⭐⭐⭐ Good</option>
+                        <option value="2">⭐⭐ Fair</option>
+                        <option value="1">⭐ Poor</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="comments" class="form-label">Your Feedback</label>
+                    <textarea class="form-control" name="comments" rows="4" placeholder="Tell us what you think..." required></textarea>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                </div>
+            </form>
+        </div>
+{% comment %} 
+        <div class="thank-you" id="thank-you-message">
+            <h4>🎉 Thank You for Your Feedback!</h4>
+            <p>We really appreciate you taking the time to help us improve our platform.</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('feedbackForm');
+        const formContainer = document.getElementById('form-container');
+        const thankYouMessage = document.getElementById('thank-you-message');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent actual submission
+
+            // Optionally, here you can send form data using fetch/AJAX
+
+            // Show thank you message
+            formContainer.style.display = 'none';
+            thankYouMessage.style.display = 'block';
+        });
+    </script> {% endcomment %}
+
+</main>
+{% endblock %}

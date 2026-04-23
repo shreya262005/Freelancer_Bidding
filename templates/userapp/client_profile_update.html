@@ -1,0 +1,172 @@
+{% extends "userapp/master.html" %}
+{% load static %}
+{% block content %}
+
+
+
+<div class="profile-container">
+    <h2>Update Client Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="profile-image">
+            {% if client.user.image %}
+            <img src="{{ client.user.image.url }}" alt="Profile Image">
+            {% else %}
+            <img src="{% static 'default_profile.jpg' %}" alt="Default Image">
+            {% endif %}
+            <input type="file" name="image" class="form-control mt-2">
+        </div>
+
+        <div class="profile-info">
+            <label>Username</label>
+            <input type="text" name="username" value="{{ client.user.username }}" class="form-control mb-3">
+
+            <label>Company Name</label>
+            <input type="text" name="company_name" value="{{ client.company_name }}" class="form-control mb-3">
+
+            <label>Owner Name</label>
+            <input type="text" name="owner_name" value="{{ client.owner_name }}" class="form-control mb-3">
+
+            <label>Company Phone</label>
+            <input type="text" name="company_phone" value="{{ client.company_phone }}" class="form-control mb-3">
+
+            <label>Location</label>
+            <input type="text" name="location" value="{{ client.location }}" class="form-control mb-3">
+
+        </div>
+
+        <button type="submit" class="btn-edit">Save Changes</button>
+        <a href="{% url 'client_profile' %}" class="btn-edit cancel-btn">Cancel</a>
+    </form>
+</div>
+
+<style>
+    body {
+        background-color: rgb(234, 241, 251);
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 80px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-image img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .profile-info {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .btn-edit {
+        padding: 10px 20px;
+        background-color: #a3d5ff;
+        color: #003366;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit:hover {
+        background-color: #007acc;
+        color: white;
+        transform: scale(1.05);
+    }
+
+    .cancel-btn {
+        margin-left: 10px;
+        background-color: #ffd6d6;
+        color: #660000;
+    }
+
+    .cancel-btn:hover {
+        background-color: #ff4d4d;
+        color: white;
+        
+    }
+
+    .fade-out {
+        animation: fadeOut 1s forwards;
+    }
+
+    @keyframes slide-in {
+        from {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeOut {
+        to {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+</style>
+
+
+<script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        // Get the form data
+        const companyPhone = document.querySelector("input[name='company_phone']").value;
+        const companyName = document.querySelector("input[name='company_name']").value;
+        const ownerName = document.querySelector("input[name='owner_name']").value;
+        const location = document.querySelector("input[name='location']").value;
+
+        // Basic validation
+        if (!companyName || !ownerName || !companyPhone || !location) {
+            event.preventDefault();  // Prevent form submission
+            alert("All fields are required!");
+            return;
+        }
+
+        // Phone number validation (basic)
+        const phonePattern = /^[0-9]{10}$/;
+        if (!phonePattern.test(companyPhone)) {
+            event.preventDefault();
+            alert("Please enter a valid 10-digit phone number.");
+            return;
+        }
+
+        // Optionally, you could check the image as well, if required.
+        const imageInput = document.querySelector("input[name='image']");
+        if (imageInput.files.length > 0) {
+            const image = imageInput.files[0];
+            const validImageTypes = ["image/jpeg", "image/png"];
+            if (!validImageTypes.includes(image.type)) {
+                event.preventDefault();
+                alert("Only JPEG and PNG images are allowed.");
+                return;
+            }
+        }
+
+        // If everything is valid, allow form submission
+    });
+</script>
+
+{% endblock %}

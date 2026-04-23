@@ -1,0 +1,150 @@
+{% extends "freelancerapp/master.html" %}
+{% load static %}
+{% block content %}
+
+<head>
+    <title>Daily Project Update</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 70px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #343a40;
+            font-weight: bold;
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+        }
+        textarea {
+            resize: none;
+        }
+        .btn-submit {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+        /* Pop-up message */
+        .alert-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Daily Project Update</h2>
+        <form method="post" id="updateForm">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="project" class="form-label">Project:</label>
+                <select class="form-control" name="project" required>
+                    {% for project in projects %}
+                    <option value="{{ project.id }}">{{ project.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="freelancer" class="form-label">Freelancer:</label>
+                <select class="form-control" name="freelancer" required>
+                    {% for freelancer in freelancers %}
+                    <option value="{{ freelancer.id }}">{{ freelancer.user.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="date" class="form-label">Date:</label>
+                <input type="date" class="form-control" name="date" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="hours" class="form-label">Hours Worked:</label>
+                <input type="number" class="form-control" name="hours" min="1" max="24" placeholder="Enter hours worked" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="task-details" class="form-label">Task Details:</label>
+                <textarea class="form-control" name="task_details" rows="4" placeholder="Describe today's tasks" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="status" class="form-label">Status:</label>
+                <select class="form-select" name="status" required>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-submit">Submit Update</button>
+        </form>
+    </div>
+
+    <!-- Success Pop-up Message -->
+    {% comment %} <div id="alertBox" class="alert-box">Update submitted successfully!</div> {% endcomment %}
+
+    {% comment %} <script>
+        document.getElementById("updateForm").addEventListener("submit", function(event) {
+            //event.preventDefault(); // Prevent actual form submission
+
+            // Show the pop-up message
+            var alertBox = document.getElementById("alertBox");
+            alertBox.style.display = "block";
+
+            // Hide the pop-up message after 3 seconds
+            setTimeout(function() {
+                alertBox.style.display = "none";
+            }, 3000);
+
+            // Reset the form fields
+            this.reset();
+        });
+    </script> {% endcomment %}
+
+</body>
+
+{% endblock %}

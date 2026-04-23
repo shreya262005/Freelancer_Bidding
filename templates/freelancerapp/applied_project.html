@@ -1,0 +1,58 @@
+{% extends "freelancerapp/master.html" %}
+{% load static %}
+{% block content %}
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background-color: #f9f9fb; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        th, td { padding: 15px; text-align: center; border: 1px solid #ddd; }
+        th { background-color: #4CAF50; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .status { padding: 5px 10px; border-radius: 5px; color: white; }
+        .pending { background-color: #f0ad4e; }
+        .approved { background-color: #5cb85c; }
+        .rejected { background-color: #d9534f; }
+    </style>
+
+<main id="main" class="main">
+
+    <div class="container">
+        <h1>Freelancer Applied Projects</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Freelancer Name</th>
+                    <th>Project Title</th>
+                    <th>Date Applied</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>Website Development</td>
+                    <td>March 20, 2025</td>
+                    <td><span class="status pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>Mobile App Design</td>
+                    <td>March 18, 2025</td>
+                    <td><span class="status approved">Approved</span></td>
+                </tr>
+                <tr>
+                    <td>Bob Johnson</td>
+                    <td>SEO Optimization</td>
+                    <td>March 15, 2025</td>
+                    <td><span class="status rejected">Rejected</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{% endblock %}
+    

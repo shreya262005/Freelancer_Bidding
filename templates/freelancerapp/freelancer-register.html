@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Freelancer Registration</title>
+
+  <!-- Favicons -->
+  <link href="{% static 'userapp/assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'userapp/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'userapp/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'userapp/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg,rgb(210, 227, 232));
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    .form-control, .form-check-input {
+      border-radius: 10px;
+    }
+
+    .btn-primary {
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 500;
+    }
+
+    .heading-title {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #555;
+    }
+
+    .input-group-text {
+      border-radius: 10px 0 0 10px;
+    }
+
+    .small a {
+      color: #007bff;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+      .card {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      <div class="card p-4">
+        <h2 class="heading-title">Freelancer Registration</h2>
+
+        <form class="row g-3 needs-validation" enctype="multipart/form-data" novalidate method="post" id="freelancerForm">
+          {% csrf_token %}
+
+          <div class="col-12">
+            <label for="yourUsername" class="form-label">Freelancer Name</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text">@</span>
+              <input type="text" name="username" class="form-control" id="yourUsername" placeholder="Enter your name" required title="Username must be between 3-20 characters and can only contain letters, numbers, and underscores">
+              <div class="invalid-feedback">Please enter a valid username (3-20 characters).</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="yourPassword" class="form-label">Contact Number</label>
+            <input type="tel" name="contact" class="form-control" id="yourPassword" placeholder="Enter 10-digit phone number" pattern="[0-9]{10}" required>
+            <div class="invalid-feedback">Enter a valid 10-digit phone number.</div>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Gender</label>
+            <div class="form-check">
+              <input type="radio" id="male" name="gender" value="male" class="form-check-input" required>
+              <label for="male" class="form-check-label">Male</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="female" name="gender" value="female" class="form-check-input" required>
+              <label for="female" class="form-check-label">Female</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="other" name="gender" value="other" class="form-check-input" required>
+              <label for="other" class="form-check-label">Other</label>
+            </div>
+            <div class="invalid-feedback">Please select your gender.</div>
+          </div>
+
+          <div class="col-12">
+            <label for="profileImage" class="form-label">Profile Image</label>
+            <input type="file" name="image" class="form-control" id="profileImage" accept="image/*" required>
+            <div class="invalid-feedback">Upload a valid image (max 5MB).</div>
+          </div>
+
+          <div class="col-12">
+            <label for="aadharImage" class="form-label">Aadhar Image</label>
+            <input type="file" name="addhar_image" class="form-control" id="aadharImage" accept="image/*" required>
+            <div class="invalid-feedback">Upload a valid Aadhar image (max 5MB).</div>
+          </div>
+
+          <div class="col-12">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" name="category" class="form-control" id="category" placeholder="e.g., Web Developer, Graphic Designer" pattern="[a-zA-Z\s]{2,50}" required>
+            <div class="invalid-feedback">Enter a valid category (2-50 letters only).</div>
+          </div>
+
+          <div class="col-12">
+            <label for="linkedinUrl" class="form-label">LinkedIn URL</label>
+            <input type="url" name="linkedin_url" class="form-control" id="linkedinUrl" placeholder="https://linkedin.com/in/yourprofile" required>
+            <div class="invalid-feedback">Enter a valid LinkedIn profile URL.</div>
+          </div>
+
+          <div class="col-12">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Create a strong password" required>
+            <div class="invalid-feedback">Password must be at least 8 characters with upper, lower, and numbers.</div>
+          </div>
+
+          <div class="col-12">
+            <label for="yourPassword" class="form-label">Confirm Password</label>
+            <input type="password" name="password1" class="form-control" id="confirmPassword" required>
+            <div class="invalid-feedback">Passwords do not match!</div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" name="terms" type="checkbox" id="acceptTerms" required>
+              <label class="form-check-label" for="acceptTerms">
+                I agree to the <a href="#">terms and conditions</a>
+              </label>
+              <div class="invalid-feedback">You must accept before submitting.</div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Create Account</button>
+          </div>
+
+          <div class="col-12 text-center">
+            <p class="small mb-0">Already have an account? <a href="{% url 'login_page' %}">Log in</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'userapp/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Form Validation Script -->
+  <script>
+    (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+
+    // Password match validation
+    document.getElementById('freelancerForm').addEventListener('submit', function(e) {
+      var password = document.getElementById('password').value;
+      var confirmPassword = document.getElementById('confirmPassword').value;
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        document.getElementById('confirmPassword').setCustomValidity("Passwords do not match");
+      } else {
+        document.getElementById('confirmPassword').setCustomValidity('');
+      }
+    });
+
+    // File size validation
+    function validateFileSize(inputId) {
+      const input = document.getElementById(inputId);
+      input.addEventListener('change', function () {
+        if (this.files[0].size > 5 * 1024 * 1024) {
+          this.setCustomValidity('File size must be less than 5MB');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
+    }
+    validateFileSize('profileImage');
+    validateFileSize('aadharImage');
+  </script>
+
+</body>
+</html>

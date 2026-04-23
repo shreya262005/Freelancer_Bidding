@@ -1,0 +1,489 @@
+{% extends "userapp/master.html" %}
+{% load static %}
+{% block content %}
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+  }
+  #applyNow {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+  }
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 0;
+    border-radius: 8px;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+  }
+  .form-container {
+    padding: 30px;
+  }
+  .form-container h1 {
+    text-align: center;
+    color: #333;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: bold;
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #2ecc71;
+  }
+  .form-buttons {
+    text-align: center;
+  }
+  .form-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  .form-buttons .reset {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+  .form-buttons .submit {
+    background-color: #2ecc71;
+    color: #fff;
+  }
+  @media (max-width: 600px) {
+    .form-buttons button {
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
+</style>
+  
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      margin-top:90px;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .image-container {
+      flex: 1 1 300px;
+    }
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .details-container {
+      flex: 1 1 400px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .details {
+      margin-bottom: 20px;
+    }
+    .details h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    .details ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+    .details ul li {
+      padding: 8px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .details ul li:last-child {
+      border-bottom: none;
+    }
+    .details ul li span {
+      font-weight: bold;
+      color: #555;
+    }
+    .buttons {
+      text-align: right;
+    }
+    .buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .buttons .reject {
+      background-color: #e74c3c;
+      color: #fff;
+    }
+    .buttons .approve {
+      background-color: #2ecc71;
+      color: #fff;
+    }
+    /* Table styling for freelancer applications */
+    .applications-section {
+      max-width: 1100px;
+      margin: 40px auto 0;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .applications-section h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .applications-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .applications-table th, 
+    .applications-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    .applications-table th {
+      background-color: #f7f7f7;
+    }
+    .table-buttons button {
+      padding: 6px 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .table-buttons .reject {
+      background-color: #e74c3c;
+      color: #fff;
+    }
+    .table-buttons .approve {
+      background-color: #2ecc71;
+      color: #fff;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .buttons {
+        text-align: center;
+      }
+      .buttons button {
+        margin: 10px 5px 0;
+      }
+    }
+</style>
+
+<main id="main" class="main mt-5">  
+    <div class="container">
+      <div class="image-container mt-4">
+        <img src="{{ data.project_image.url }}" height="250px" width="300px" alt="Project Image" alt="Project Image">
+      </div>
+      <div class="details-container">
+        <div class="details">
+          <h2>Project Details</h2>
+          <ul>
+            <li><span>Project Name : </span>{{data.name}}</li>
+            <li><span>Project Category : </span>{{data.category}}</li>
+            <li><span>Deadline : </span> {{data.deadline|date:'M d, Y'}}</li>
+            <li><span>Budget : </span> Rs. {{data.budget}}</li>
+            <li><span>Additional Details : </span>{{data.description}}</li>
+          </ul>
+          {% comment %} {% if data.is_paid %} {% endcomment %}
+          <button type="button" id="showFreelancerApplications" class="btn btn-primary">Project Update</button>
+          <button type="button" id="showProjectUpdate" class="btn btn-primary">Freelancer Details</button>
+          {% comment %} {% endif %} {% endcomment %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Freelancer Applications Table -->
+    <div id="freelancerApplicationsTable" class="applications-section">
+      <h2>Freelancer Applications</h2>
+      <table class="applications-table">
+        <thead>
+          <tr>
+            <th>Freelancer Name</th>
+            <th>Completion Date</th>
+            <th>Proposed Budget</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Actions</th>
+            <th>Payment Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ab in project_response %}
+          <tr>
+            <td>{{ab.freelancer}}</td>
+            <td>{{ab.deadline}}</td>
+            <td>Rs. {{ab.budget}}</td>
+            <td>{{ab.description}}</td>
+            <td>{{ab.status}}</td>
+            {% if ab.project.status == "Pending" %}
+              {% if ab.status == "Approved" %}
+              <td><span>Accepted</span></td>
+              {% elif ab.status == "Rejected" %}
+              <td><span>Rejected</span></td>
+              {% else %}
+              <td class="table-buttons">
+                <a href="{% url 'reject_freelancer_project' ab.id %}"><button class="reject">Reject</button></a>
+                <a href="{% url 'approve_freelancer_project' ab.id %}"><button class="approve">Approve</button></a>
+              </td>
+              {% endif %}
+            {% else %}
+            <td>
+              <li>Freelancer Booked</li>
+              {% if ab.status == "Approved" %}
+              <li>Accepted</li>
+              {% elif ab.status == "Rejected" %}
+              <li>Rejected</li>
+              {% else %}
+              <li>Pending</li>
+              {% endif %}
+            </td>
+            <td>
+              {% if ab.status == "Approved" %}
+                {% if data.is_paid %}
+                Payment Done<br>  ({{data.payment_mode}})
+                {% else %}
+                <button class="btn btn-primary apply-btn" id="applyNow-{{ ab.id }}">Make Payment</button>
+                {% endif %}
+              {% else %}
+              N/A
+              {% endif %}
+            </td>
+            {% endif %}
+          </tr>
+
+          <!-- Modal Structure -->
+          <div id="modal-{{ ab.id }}" class="modal">
+            <div class="modal-content">
+                <div class="form-container">
+                    <h1>Freelancer Application</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="deadline">Payment Mode</label>
+                            <select class="form-select" name="payment" required aria-label="Default select example">
+                              <option value="">Select Option</option>
+                              <option value="Online Payment">Online Payment</option>
+                              <option value="Cash">Cash</option>
+                              <option value="Card Payment">Card Payment</option>
+                              <option value="UPI Payment">UPI Payment</option>
+                              <option value="Cheque">Cheque</option>
+                            </select>
+                            <input type="hidden" name="project" value="{{ab.id}}">
+                        </div>
+                        <div class="form-buttons">
+                            <button type="reset" class="reset">Reset</button>
+                            <button type="submit" class="submit">Make Payment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+
+          {% endfor %}
+          <!-- Additional freelancer rows can be added here -->
+        </tbody>
+      </table>
+    </div>
+
+    
+    <div id="projectUpdateTable" style="display:none;" class="applications-section">
+      <h2>PROJECT UPDATE</h2>
+      <table class="applications-table">
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Freelancer Name</th>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Task Details</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in update %}
+          <tr>
+            <td>{{ i.project.name }}</td>
+            <td>{{ i.freelancer.user.username }}</td>
+            <td>{{ i.date }}</td>
+            <td>{{ i.hours }}</td>
+            <td>{{ i.task_details }}</td>
+            <td>{{ i.status }}</td>
+          </tr>
+          {% empty %}
+            <tr>
+                <td colspan="6" style="text-align:center;">No updates yet.</td>
+            </tr>
+            
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+</main>
+
+<script>
+  // JavaScript to handle opening and closing the modal
+  document.addEventListener("DOMContentLoaded", function () {
+    // Select all "Make Payment" buttons
+    const paymentButtons = document.querySelectorAll('.apply-btn');
+    
+    paymentButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        const freelancerId = this.id.split('-')[1];  // Get freelancer id
+        const modal = document.getElementById('modal-' + freelancerId); // Get the modal corresponding to the freelancer
+        modal.style.display = 'block'; // Show the modal
+      });
+    });
+    
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = 'none'; // Close modal
+        }
+      });
+    };
+  });
+</script>
+
+
+{% comment %} <!-- Add Buttons for Show/Hide Approved Freelancers -->
+<div style="text-align: center; margin: 20px;">
+  <button id="showApproved" class="btn btn-success">Show Approved</button>
+  <button id="hideApproved" class="btn btn-danger" style="display: none;">Hide Approved</button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const showButton = document.getElementById("showApproved");
+  const hideButton = document.getElementById("hideApproved");
+
+  showButton.addEventListener("click", function () {
+      document.querySelectorAll("tbody tr").forEach(row => {
+          let statusCell = row.querySelector("td:nth-child(5)");
+          if (statusCell && statusCell.textContent.trim() === "Approved") {
+              row.style.display = "table-row"; 
+          } else {
+              row.style.display = "none"; 
+          }
+      });
+
+      showButton.style.display = "none";
+      hideButton.style.display = "inline-block";
+  });
+
+  hideButton.addEventListener("click", function () {
+      document.querySelectorAll("tbody tr").forEach(row => {
+          row.style.display = "table-row"; // Show all rows again
+      });
+
+      hideButton.style.display = "none";
+      showButton.style.display = "inline-block";
+  });
+});
+</script> {% endcomment %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const showFreelancerApplicationsButton = document.getElementById("showFreelancerApplications");
+    const showProjectUpdateButton = document.getElementById("showProjectUpdate");
+    const freelancerApplicationsTable = document.getElementById("freelancerApplicationsTable");
+    const projectUpdateTable = document.getElementById("projectUpdateTable");
+  
+    showFreelancerApplicationsButton.addEventListener("click", function () {
+      freelancerApplicationsTable.style.display = "none";
+      projectUpdateTable.style.display = "block";
+      showFreelancerApplicationsButton.style.display = "inline-block";
+      showProjectUpdateButton.style.display = "inline-block";
+    });
+  
+    showProjectUpdateButton.addEventListener("click", function () {
+      freelancerApplicationsTable.style.display = "block";
+      projectUpdateTable.style.display = "none";
+      showProjectUpdateButton.style.display = "inline-block";
+      showFreelancerApplicationsButton.style.display = "inline-block";
+    });
+  });
+</script>
+
+{% endblock %}
